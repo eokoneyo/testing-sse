@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Testing SSE</title>
+    </head>
+    <body>
+        <h1> testing SSE</h1>
+        <script>
+
+            // subscribe for messages
+            var source = new EventSource('/server-events?user-id=fish');
+
+            // handle messages
+            source.onmessage = function(event) {
+                // Do something with the data:
+                alert(event.data);
+            };
+
+        </script>
+    </body>
+</html>
