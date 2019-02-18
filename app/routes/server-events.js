@@ -1,4 +1,3 @@
-
 const { v4 } =  require('uuid');
 
 const severEventBaseHeaders = {
@@ -7,13 +6,15 @@ const severEventBaseHeaders = {
     'Connection': 'keep-alive'
 };
 
+const DEFAULT_RETRY_CONFIG = 10000;
+
 const messageHelper = (res, optns) => {
 
     const defaultOptns = {
         id: v4(),
         data: '',
         eventType: '',
-        retry: ''
+        retry: DEFAULT_RETRY_CONFIG
     };
 
     if(!optns.data) throw new Error ('data must be provided!!');
@@ -36,14 +37,22 @@ const messageHelper = (res, optns) => {
 module.exports = (router) => {
 
     router.get('', (req, res) => {
+
         const userId = req.query['user-id'];
+        const lastMessageId = req.get('Last-Event-ID');
 
         // add check for user id
         // This provides a basis for probably performing some authentication
         // or what not before sending a message back to the user
         if(userId) {
+
+            if(lastMessageId) {
+                //use last message id to do some look up for the next message to send if you may
+                console.log('last event client received:: %s', lastMessageId);
+            }
+
             setTimeout(() => messageHelper(res, {
-                data: 'Hi',
+                data: (new Date()).toLocaleTimeString(),
                 retry: null,
             }), 5000);
         }
