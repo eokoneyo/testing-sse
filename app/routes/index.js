@@ -1,10 +1,11 @@
-const express = require('express');
-const router = express.Router();
+const { Router } = require('express');
+const serverEvents = require('app/routes/server-events');
 
-module.exports = app => {
+module.exports = () => {
 
-    const serverEvents = require('app/routes/server-events')(router);
+   const router = new Router();
 
-    app.use('/server-events', serverEvents);
+   router.use('/server-events', serverEvents());
 
+   return router;
 };

@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=. node app/server.js",
+    "start": "cp ./node_modules/event-source-polyfill/src/eventsource.js ./app/static/ && NODE_PATH=. node app/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "event-source-polyfill": "^1.0.5",
     "express": "^4.16.4",
     "notifyjs": "^3.0.0",
     "uuid": "^3.3.2"

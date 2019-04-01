@@ -1,4 +1,5 @@
 const { v4 } =  require('uuid');
+const { Router } = require('express');
 
 const severEventBaseHeaders = {
     'Content-Type': 'text/event-stream',
@@ -34,7 +35,9 @@ const messageHelper = (res, optns) => {
     res.write(`data: ${data} \n\n`);
 };
 
-module.exports = (router) => {
+module.exports = () => {
+
+    const router = new Router();
 
     router.get('', (req, res) => {
 
@@ -54,7 +57,7 @@ module.exports = (router) => {
             setTimeout(() => messageHelper(res, {
                 data: (new Date()).toLocaleTimeString(),
                 retry: null,
-            }), 5000);
+            }), 10000);
         }
     });
 
